@@ -1,0 +1,463 @@
+about:
+  date: October 18, 2024 22:06:53
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Analysi:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: skeleton_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: analysis_date
+      required: true
+      template: date
+      type: DATETIME
+    - name: report_content
+      template: text
+      type: VARCHAR
+    description: Details about various analyses performed on a skeleton.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Details about various analyses performed on a skeleton.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - skeleton_id
+      name: skeleton
+      resource: Skeleton
+    type: Analysi
+  Bone:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: length
+      template: real
+      type: FLOAT
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a single bone in 'los esqueletos'.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents a single bone in 'los esqueletos'.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - bone_id
+      name: BoneSkeletonList
+      resource: BoneSkeleton
+    type: Bone
+  BoneSkeleton:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: bone_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: skeleton_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Junction table to associate bones with skeletons.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Junction table to associate bones with skeletons.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - bone_id
+      name: bone
+      resource: Bone
+    - direction: toone
+      fks:
+      - skeleton_id
+      name: skeleton
+      resource: Skeleton
+    type: BoneSkeleton
+  BoneType:
+    columns:
+    - label: ' type_name*'
+      name: type_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Defines different types of bones, such as 'femur', 'tibia', etc.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: type_name
+    home_template: home_template.html
+    info_list: Defines different types of bones, such as 'femur', 'tibia', etc.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - bone_type_id
+      name: BoneTypeFunctionList
+      resource: BoneTypeFunction
+    type: BoneType
+  BoneTypeFunction:
+    columns:
+    - label: ' function_description*'
+      name: function_description
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: bone_type_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Relationship that describes the function of a type of bone.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: function_description
+    home_template: home_template.html
+    info_list: Relationship that describes the function of a type of bone.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - bone_type_id
+      name: bone_type
+      resource: BoneType
+    type: BoneTypeFunction
+  DinosaurType:
+    columns:
+    - label: ' type_name*'
+      name: type_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Classification of dinosaurs, e.g., 'Tyrannosaurus', 'Stegosaurus'.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: type_name
+    home_template: home_template.html
+    info_list: Classification of dinosaurs, e.g., 'Tyrannosaurus', 'Stegosaurus'.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - dinosaur_type_id
+      name: SkeletonDinosaurTypeList
+      resource: SkeletonDinosaurType
+    type: DinosaurType
+  Discovery:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: site_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: skeleton_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: discovery_date
+      required: true
+      template: date
+      type: DATETIME
+    description: Records details of the discovery of skeletons at a site.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Records details of the discovery of skeletons at a site.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - site_id
+      name: site
+      resource: Site
+    - direction: toone
+      fks:
+      - skeleton_id
+      name: skeleton
+      resource: Skeleton
+    type: Discovery
+  Researcher:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: specialty
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Information about researchers studying the skeletons.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Information about researchers studying the skeletons.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - researcher_id
+      name: ResearcherSkeletonList
+      resource: ResearcherSkeleton
+    type: Researcher
+  ResearcherSkeleton:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: researcher_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: skeleton_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Junction table to link researchers to specific skeletons for studies.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Junction table to link researchers to specific skeletons for studies.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - researcher_id
+      name: researcher
+      resource: Researcher
+    - direction: toone
+      fks:
+      - skeleton_id
+      name: skeleton
+      resource: Skeleton
+    type: ResearcherSkeleton
+  Site:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: location
+      required: true
+      template: text
+      type: VARCHAR
+    description: Archaeological site where the skeletons were discovered.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Archaeological site where the skeletons were discovered.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - site_id
+      name: DiscoveryList
+      resource: Discovery
+    type: Site
+  Skeleton:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: discovery_date
+      required: true
+      template: date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents the entire skeleton, each having a unique identifier.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents the entire skeleton, each having a unique identifier.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - skeleton_id
+      name: AnalysiList
+      resource: Analysi
+    - direction: tomany
+      fks:
+      - skeleton_id
+      name: BoneSkeletonList
+      resource: BoneSkeleton
+    - direction: tomany
+      fks:
+      - skeleton_id
+      name: DiscoveryList
+      resource: Discovery
+    - direction: tomany
+      fks:
+      - skeleton_id
+      name: ResearcherSkeletonList
+      resource: ResearcherSkeleton
+    - direction: tomany
+      fks:
+      - skeleton_id
+      name: SkeletonDinosaurTypeList
+      resource: SkeletonDinosaurType
+    type: Skeleton
+  SkeletonDinosaurType:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: dinosaur_type_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: skeleton_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Associates skeletons with their dinosaur type.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Associates skeletons with their dinosaur type.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - dinosaur_type_id
+      name: dinosaur_type
+      resource: DinosaurType
+    - direction: toone
+      fks:
+      - skeleton_id
+      name: skeleton
+      resource: Skeleton
+    type: SkeletonDinosaurType
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

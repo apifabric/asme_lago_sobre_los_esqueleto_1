@@ -1,0 +1,315 @@
+about:
+  date: October 18, 2024 22:06:53
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 10
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Analysi:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: skeleton_id
+      required: true
+    - name: analysis_date
+      required: true
+    - name: report_content
+    description: Details about various analyses performed on a skeleton.
+    info_list: Details about various analyses performed on a skeleton.
+    tab_groups:
+    - direction: toone
+      fks:
+      - skeleton_id
+      name: skeleton
+      resource: Skeleton
+    type: Analysi
+    user_key: id
+  Bone:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: length
+    - name: id
+    description: Represents a single bone in 'los esqueletos'.
+    info_list: Represents a single bone in 'los esqueletos'.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - bone_id
+      name: BoneSkeletonList
+      resource: BoneSkeleton
+    type: Bone
+    user_key: name
+  BoneSkeleton:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: bone_id
+      required: true
+    - name: skeleton_id
+      required: true
+    description: Junction table to associate bones with skeletons.
+    info_list: Junction table to associate bones with skeletons.
+    tab_groups:
+    - direction: toone
+      fks:
+      - bone_id
+      name: bone
+      resource: Bone
+    - direction: toone
+      fks:
+      - skeleton_id
+      name: skeleton
+      resource: Skeleton
+    type: BoneSkeleton
+    user_key: id
+  BoneType:
+    attributes:
+    - label: ' type_name*'
+      name: type_name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Defines different types of bones, such as 'femur', 'tibia', etc.
+    info_list: Defines different types of bones, such as 'femur', 'tibia', etc.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - bone_type_id
+      name: BoneTypeFunctionList
+      resource: BoneTypeFunction
+    type: BoneType
+    user_key: type_name
+  BoneTypeFunction:
+    attributes:
+    - label: ' function_description*'
+      name: function_description
+      search: true
+      sort: true
+    - name: bone_type_id
+      required: true
+    - name: id
+    description: Relationship that describes the function of a type of bone.
+    info_list: Relationship that describes the function of a type of bone.
+    tab_groups:
+    - direction: toone
+      fks:
+      - bone_type_id
+      name: bone_type
+      resource: BoneType
+    type: BoneTypeFunction
+    user_key: function_description
+  DinosaurType:
+    attributes:
+    - label: ' type_name*'
+      name: type_name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Classification of dinosaurs, e.g., 'Tyrannosaurus', 'Stegosaurus'.
+    info_list: Classification of dinosaurs, e.g., 'Tyrannosaurus', 'Stegosaurus'.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - dinosaur_type_id
+      name: SkeletonDinosaurTypeList
+      resource: SkeletonDinosaurType
+    type: DinosaurType
+    user_key: type_name
+  Discovery:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: site_id
+      required: true
+    - name: skeleton_id
+      required: true
+    - name: discovery_date
+      required: true
+    description: Records details of the discovery of skeletons at a site.
+    info_list: Records details of the discovery of skeletons at a site.
+    tab_groups:
+    - direction: toone
+      fks:
+      - site_id
+      name: site
+      resource: Site
+    - direction: toone
+      fks:
+      - skeleton_id
+      name: skeleton
+      resource: Skeleton
+    type: Discovery
+    user_key: id
+  Researcher:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: specialty
+    - name: id
+    description: Information about researchers studying the skeletons.
+    info_list: Information about researchers studying the skeletons.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - researcher_id
+      name: ResearcherSkeletonList
+      resource: ResearcherSkeleton
+    type: Researcher
+    user_key: name
+  ResearcherSkeleton:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: researcher_id
+      required: true
+    - name: skeleton_id
+      required: true
+    description: Junction table to link researchers to specific skeletons for studies.
+    info_list: Junction table to link researchers to specific skeletons for studies.
+    tab_groups:
+    - direction: toone
+      fks:
+      - researcher_id
+      name: researcher
+      resource: Researcher
+    - direction: toone
+      fks:
+      - skeleton_id
+      name: skeleton
+      resource: Skeleton
+    type: ResearcherSkeleton
+    user_key: id
+  Site:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: location
+      required: true
+    description: Archaeological site where the skeletons were discovered.
+    info_list: Archaeological site where the skeletons were discovered.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - site_id
+      name: DiscoveryList
+      resource: Discovery
+    type: Site
+    user_key: id
+  Skeleton:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: discovery_date
+      required: true
+    - name: id
+    description: Represents the entire skeleton, each having a unique identifier.
+    info_list: Represents the entire skeleton, each having a unique identifier.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - skeleton_id
+      name: AnalysiList
+      resource: Analysi
+    - direction: tomany
+      fks:
+      - skeleton_id
+      name: BoneSkeletonList
+      resource: BoneSkeleton
+    - direction: tomany
+      fks:
+      - skeleton_id
+      name: DiscoveryList
+      resource: Discovery
+    - direction: tomany
+      fks:
+      - skeleton_id
+      name: ResearcherSkeletonList
+      resource: ResearcherSkeleton
+    - direction: tomany
+      fks:
+      - skeleton_id
+      name: SkeletonDinosaurTypeList
+      resource: SkeletonDinosaurType
+    type: Skeleton
+    user_key: name
+  SkeletonDinosaurType:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: dinosaur_type_id
+      required: true
+    - name: skeleton_id
+      required: true
+    description: Associates skeletons with their dinosaur type.
+    info_list: Associates skeletons with their dinosaur type.
+    tab_groups:
+    - direction: toone
+      fks:
+      - dinosaur_type_id
+      name: dinosaur_type
+      resource: DinosaurType
+    - direction: toone
+      fks:
+      - skeleton_id
+      name: skeleton
+      resource: Skeleton
+    type: SkeletonDinosaurType
+    user_key: id
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

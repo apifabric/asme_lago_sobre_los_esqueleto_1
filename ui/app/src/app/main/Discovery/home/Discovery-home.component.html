@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="Discovery" mode="tab" title="DISCOVERY">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="DiscoveryTable" 
+            service="Discovery" 
+            entity="Discovery" 
+            title="DISCOVERY"
+            keys="id"
+            columns="id;site_id;skeleton_id;discovery_date" 
+            header-actions="R;D"
+            visible-columns="id;site_id;skeleton_id;discovery_date"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="site_id" title="site_id">
+    <o-table-cell-renderer-service attr="site_id" 
+        service="Site" entity="SiteType" columns="id;id"
+        parent-keys="id:site_id"
+        value-column="id" keys="site_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="skeleton_id" title="skeleton_id">
+    <o-table-cell-renderer-service attr="skeleton_id" 
+        service="Skeleton" entity="SkeletonType" columns="id;name"
+        parent-keys="id:skeleton_id"
+        value-column="name" keys="skeleton_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-date-input #discovery_date attr="discovery_date" type="timestamp" label="discovery_date" editable="no" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

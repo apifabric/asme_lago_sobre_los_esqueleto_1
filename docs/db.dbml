@@ -1,0 +1,87 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Analysi {
+    id INTEGER [primary key]
+    skeleton_id INTEGER 
+    analysis_date DATETIME 
+    report_content VARCHAR 
+    }
+
+Table Skeleton {
+    id INTEGER [primary key]
+    name VARCHAR 
+    discovery_date DATETIME 
+    }
+
+Table Bone {
+    id INTEGER [primary key]
+    name VARCHAR 
+    length FLOAT 
+    }
+
+Table BoneSkeleton {
+    id INTEGER [primary key]
+    bone_id INTEGER 
+    skeleton_id INTEGER 
+    }
+
+Table BoneType {
+    id INTEGER [primary key]
+    type_name VARCHAR 
+    }
+
+Table BoneTypeFunction {
+    id INTEGER [primary key]
+    bone_type_id INTEGER 
+    function_description VARCHAR 
+    }
+
+Table DinosaurType {
+    id INTEGER [primary key]
+    type_name VARCHAR 
+    }
+
+Table Discovery {
+    id INTEGER [primary key]
+    skeleton_id INTEGER 
+    site_id INTEGER 
+    discovery_date DATETIME 
+    }
+
+Table Site {
+    id INTEGER [primary key]
+    location VARCHAR 
+    }
+
+Table Researcher {
+    id INTEGER [primary key]
+    name VARCHAR 
+    specialty VARCHAR 
+    }
+
+Table ResearcherSkeleton {
+    id INTEGER [primary key]
+    researcher_id INTEGER 
+    skeleton_id INTEGER 
+    }
+
+Table SkeletonDinosaurType {
+    id INTEGER [primary key]
+    skeleton_id INTEGER 
+    dinosaur_type_id INTEGER 
+    }
+
+
+
+// Relationships
+    Ref: Analysi.(skeleton_id) < Skeleton.(id)
+    Ref: BoneSkeleton.(bone_id) < Bone.(id)
+    Ref: BoneSkeleton.(skeleton_id) < Skeleton.(id)
+    Ref: BoneTypeFunction.(bone_type_id) < BoneType.(id)
+    Ref: Discovery.(site_id) < Site.(id)
+    Ref: Discovery.(skeleton_id) < Skeleton.(id)
+    Ref: ResearcherSkeleton.(researcher_id) < Researcher.(id)
+    Ref: ResearcherSkeleton.(skeleton_id) < Skeleton.(id)
+    Ref: SkeletonDinosaurType.(dinosaur_type_id) < DinosaurType.(id)
+    Ref: SkeletonDinosaurType.(skeleton_id) < Skeleton.(id)
